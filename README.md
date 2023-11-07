@@ -18,3 +18,25 @@ _Stateless_ widget bersifat statis yang berarti bahwa widget ini tidak perlu diu
 - **`Column` widget** yang digunakan untuk memberikan tampilan kolom terhadap _cards_.
 
 3. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+- Membuat sebuah program Flutter baru dengan tema inventory seperti tugas-tugas sebelumnya. \
+Sebelum menginisiasi program Flutter baru, saya membuat dan menginisiasi repo GitHub baru yang saya namakan "bicycleparts-inv-mobile". Setelah itu, saya membuat direktori proyek baru pada komputer saya dan mengambil perintah `git init` pada terminal untuk menginisiasi repo lokal. Setelah itu saya melakukan _commit_ pertama terlebih dahulu untuk menyambungkan repo lokal dengan repo pada GitHub. Kemudian, pada direktori proyek saya menggunakan perintah `flutter create main` untuk menginisiasi aplikasi Flutter yang dinamakan dengan `main`. \
+\
+Pada _path_ `main/lib` saya membuat berkas `.dart` yang saya namakan `menu.dart`. Pada `main.dart`, saya memindahkan beberapa kelas seperti `MyHomePage` agar program `menu.dart` dapat berfokus pada pengerjaan halaman utama (_home page_) pada aplikasi. Setelah itu, saya melakukan konfigurasi terhadap kedua program Dart tersebut agar dapat berubah dari _stateful_ menjadi _stateless_ karena masih belum diperlukan widget _stateful_.
+
+- Membuat tiga tombol sederhana dengan ikon dan teks untuk:
+    - Melihat daftar item (`Lihat Item`)
+    - Menambah item (`Tambah Item`)
+    - Logout (`Logout`)
+
+    Pada kelas `MyHomePage` pada `menu.dart`, saya membuat kelas baru yang saya namakan `InventoryItem` untuk membentuk tombol-tombol tersebut. Kelas `InventoryItem` diisikan _fields_ `name` untuk teks dari tombol, `icon` untuk _icon_ dari tombol, dan `color` warna dari tombol.
+
+    Setelah itu, saya juga menambahkan kelas baru bersifat _stateless_ yang dinamakan `ItemCard`. Kelas ini memiliki _class field_ kelas `InventoryItem`. Pada _method_ `build`, dibuat kelas `Material` sebagai dasar dari pembuatan tombol berupa _card_.
+
+    Kembali ke kelas `MyHomePage`, saya menginisiasi _class field_ yang saya namakan `items` yang berupa suatu struktur data `List` yang diisikan object-object `InventoryItem` atau kita dapat juga samakan dengan _item_ tombol-tombol yang akan dibuat. Dalam _method_ `build`, pada widget `SingleChildScrolView`, dibuat suatu `GridView` untuk menata setiap object tombol pada _list_ `items` pada _fields_ dari kelas.
+
+- Memunculkan `SnackBar` dengan tulisan:
+    - "Kamu telah menekan tombol Lihat Item" ketika tombol `Lihat Item` ditekan.
+    - "Kamu telah menekan tombol Tambah Item" ketika tombol `Tambah Item` ditekan.
+    - "Kamu telah menekan tombol Logout" ketika tombol `Logout` ditekan.
+
+    Pada kelas `ItemCard` di dalam berkas `menu.dart`, ketika pembuatan _method_ `build`, _child_ parameter dari object `Material` dibuat sebuah object `InkWell` yang memberikan suatu animasi _ink splash_ ketika tombol ditekan oleh pengguna. Salah satu parameter dari object `InkWell` adalah `onTap` yang mengatur apa yang terjadi bila tombol ditekan. Pada parameter tersebut, dipanggil method dari kelas `ScaffoldMessenger`, yaitu `hideCurrentSnackBar` untuk menyembunyikan `SnackBar` ketika tidak ditekan selama beberapa waktu dan `showSnackBar` untuk menampilkan `SnackBar`. Pada _method_ `showSnackBar`, dibuat object `SnackBar` yang diisikan dengan parameter `content`. Parameter ini merupakan tempat teks apa yang kita ingin tampilkan pada `SnackBar`. Untuk membedakan teks antar tombol, kelas `ItemCard` menginisasi _field_ `InventoryItem` yang dinamakan `item` untuk kemudian diambil nama dari setiap `item` yang akan ditampilkan pada `SnackBar`.
