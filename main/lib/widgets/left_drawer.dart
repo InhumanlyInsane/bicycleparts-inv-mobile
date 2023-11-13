@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:main/screens/menu.dart';
-import 'package:main/screens/shoplist_form.dart';
+import 'package:main/screens/item_form.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -18,7 +18,7 @@ class LeftDrawer extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'Shopping List',
+                  'Bicycle Inventory',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 30,
@@ -54,12 +54,11 @@ class LeftDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.add_shopping_cart),
             title: const Text('Tambah Item'),
-            // Bagian redirection ke ShopFormPage
             onTap: () {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const ShopFormPage(),
+                  builder: (context) => const ItemFormPage(),
                 )
               );
             },

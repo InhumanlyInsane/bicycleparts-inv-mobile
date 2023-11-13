@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:main/screens/shoplist_form.dart';
+import 'package:main/screens/item_form.dart';
 
 class InventoryItem{
   final String name;
@@ -29,9 +29,8 @@ class ItemCard extends StatelessWidget {
 
           // Navigate ke route yang sesuai (tergantung jenis tombol)
           if (item.name == "Tambah Item") {
-            // TODO: Gunakan Navigator.push untuk melakukan navigasi ke MaterialPageRoute yang mencakup ShopFormPage.
             Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const ShopFormPage()));
+              MaterialPageRoute(builder: (context) => const ItemFormPage()));
           }
         },
 

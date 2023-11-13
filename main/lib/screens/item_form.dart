@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:main/screens/menu.dart';
 import 'package:main/widgets/left_drawer.dart';
 
-class ShopFormPage extends StatefulWidget {
-    const ShopFormPage({super.key});
+class ItemFormPage extends StatefulWidget {
+    const ItemFormPage({super.key});
 
     @override
-    State<ShopFormPage> createState() => _ShopFormPageState();
+    State<ItemFormPage> createState() => _ItemFormPageState();
 }
 
-class _ShopFormPageState extends State<ShopFormPage> {
+class _ItemFormPageState extends State<ItemFormPage> {
 
   final _formKey = GlobalKey<FormState>();
   String _name = "";
@@ -151,7 +151,7 @@ class _ShopFormPageState extends State<ShopFormPage> {
                         ).then((values) {
                           Navigator.pop(context);
                           // balik ke MyHomePage
-                          Navigator.pushReplacement(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => MyHomePage()
