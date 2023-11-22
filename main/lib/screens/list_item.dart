@@ -17,7 +17,6 @@ class ItemPage extends StatefulWidget {
 class _ItemPageState extends State<ItemPage> {
 Future<List<Item>> fetchProduct() async {
     // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
-    // var url = Uri.parse('http://<URL_APP_KAMU>/json/');
 
     // BONUS
     final request = context.watch<CookieRequest>();
