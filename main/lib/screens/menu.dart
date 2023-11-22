@@ -7,9 +7,9 @@ class MyHomePage extends StatelessWidget {
   MyHomePage({Key? key}) : super(key: key);
 
   final List<InventoryItem> items = [
-      InventoryItem("Lihat Item", Icons.checklist, Colors.red),
+      InventoryItem("Lihat Item", Icons.checklist, Colors.green),
       InventoryItem("Tambah Item", Icons.add_shopping_cart, Colors.blue),
-      InventoryItem("Logout", Icons.logout, Colors.green),
+      InventoryItem("Logout", Icons.logout, Colors.red),
   ];
 
   @override

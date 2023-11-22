@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:main/screens/menu.dart';
 import 'package:main/widgets/left_drawer.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 class ItemFormPage extends StatefulWidget {
     const ItemFormPage({super.key});
@@ -14,10 +17,13 @@ class _ItemFormPageState extends State<ItemFormPage> {
   final _formKey = GlobalKey<FormState>();
   String _name = "";
   int _amount = 0;
+  int _price = 0;
   String _description = "";
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
+
     return Scaffold(
       appBar: AppBar(
         title: const Center(
@@ -68,6 +74,35 @@ class _ItemFormPageState extends State<ItemFormPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   decoration: InputDecoration(
+                    hintText: "Jumlah",
+                    labelText: "Jumlah",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                  ),
+
+                  onChanged: (String? value) {
+                    setState(() {
+                      _amount = int.parse(value!);
+                    });
+                  },
+
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return "Jumlah tidak boleh kosong!";
+                    }
+                    if (int.tryParse(value) == null) {
+                      return "Jumlah harus berupa angka!";
+                    }
+                    return null;
+                  },
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
                     hintText: "Harga",
                     labelText: "Harga",
                     border: OutlineInputBorder(
@@ -77,7 +112,7 @@ class _ItemFormPageState extends State<ItemFormPage> {
 
                   onChanged: (String? value) {
                     setState(() {
-                      _amount = int.parse(value!);
+                      _price = int.parse(value!);
                     });
                   },
 
@@ -129,8 +164,40 @@ class _ItemFormPageState extends State<ItemFormPage> {
                           MaterialStateProperty.all(Colors.indigo),
                     ),
 
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
+
+                        // Kirim ke Django dan tunggu respons
+                        // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
+                        final response = await request.postJson(
+                          "http://vincent-suhardi-tugas.pbp.cs.ui.ac.id/create-flutter/",
+                          // "http://localhost:8000/create-flutter/",
+                          jsonEncode(<String, String> {
+                            'name': _name,
+                            'amount': _amount.toString(),
+                            'price': _price.toString(),
+                            'description': _description.toString()
+                          })
+                        );
+
+                        if (response['status'] == 'success') {
+                          // ignore: use_build_context_synchronously
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("Item baru berhasil disimpan!"))
+                          );
+                          // ignore: use_build_context_synchronously
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => MyHomePage()),
+                          );
+                        } else {
+                          // ignore: use_build_context_synchronously
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("Terdapat kesalahan, silahkan coba lagi."))
+                          );
+                        }
+
+                        // ignore: use_build_context_synchronously
                         showDialog(
                           context: context,
                           builder: (context) {
@@ -142,6 +209,7 @@ class _ItemFormPageState extends State<ItemFormPage> {
                                   children: [
                                     Text('Nama: $_name'),
                                     Text('Jumlah: $_amount'),
+                                    Text('Harga: $_price'),
                                     Text('Deskripsi: $_description'),
                                   ],
                                 ),
