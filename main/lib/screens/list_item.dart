@@ -25,6 +25,7 @@ Future<List<Item>> fetchProduct() async {
     // var response = await request.get('https://localhost:8000/get-item/');
     var data = response;
 
+    // var url = Uri.parse('http://vincent-suhardi-tugas.pbp.cs.ui.ac.id/json/');
     // var url = Uri.parse('http://localhost:8000/json/');
 
     // var response = await http.get(
